@@ -1,0 +1,22 @@
+header{
+  display: flex;
+  background-color: teal;
+  color: black;
+  align-items: center;
+
+}
+
+nav{
+  span{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: white;
+   margin-left: 500px;
+   height: 100px;
+}
+
+}
+span{
+    font-size: large;
+}
