@@ -12,18 +12,29 @@ export class ItemService {
     http = inject(HttpClient);
     private apiurl = `http://localhost:3000/items`;
 
- getitems(page: number = 1, limit: number = 10) {
 
-    const params = new HttpParams()
-      .set("page", page)
-      .set("limit", limit);
-     return this.http.get<any>(this.apiurl, { params }).pipe(
+ createitems(item : Inventory) {
+
+    return this.http.post<Inventory>(this.apiurl,item).pipe(
     catchError(err => {
       console.error('Create item error : ', err);
       return throwError(()=> err);
     })
   );
  }
+
+//  createitems(item : Inventory) {
+
+//     const params = new HttpParams()
+//       .set("page", page)
+//       .set("limit", limit);
+//      return this.http.post<any>(this.apiurl, { params }).pipe(
+//     catchError(err => {
+//       console.error('Create item error : ', err);
+//       return throwError(()=> err);
+//     })
+//   );
+//  }
 
  getitem() {
   return this.http.get<Inventory[]>(this.apiurl).pipe(
@@ -43,8 +54,8 @@ export class ItemService {
      })
     );
 }
- updateitem(item: Inventory) {                           //id: string, updateData: Partial<Inventory>
-     const url = `${this.apiurl}/${item.id}`;
+ updateitem(item: Inventory,id:string) {                           //id: string, updateData: Partial<Inventory>
+     const url = `${this.apiurl}/${id}`;
      return this.http.put<Inventory>(url,item).pipe(       //    return this.http.put<Inventory>(url, updateData).pipe(
 
       catchError(err => {

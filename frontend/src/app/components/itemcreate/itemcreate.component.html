@@ -1,1 +1,24 @@
-<p>itemcreate works!</p>
+<div class="form">
+  <form class="form-item" (ngsubmit)="onCreate()"   #itemForm="ngForm"  >
+
+
+    <label for="name" >Name</label>
+    <input [(ngModel)]="newItem.name" type="text" placeholder="Name of the Product" id="name" name="name" required><br>
+
+    <label for="quantity">Quantity</label>
+    <input [(ngModel)]="newItem.quantity" type="number" placeholder="Describe the Quantity" id="quantity" name="quantity" required><br>
+
+     <label for="price">Price</label>
+    <input [(ngModel)]="newItem.price" type="number" placeholder="Describe the Price" id="price" name="price" required ><br>
+
+     <label for="category">Category</label>
+    <input [(ngModel)]="newItem.category" type="text" placeholder="Describe the Category" id="category" name="category" required><br>
+
+    <input (click)="onCreate()" type="submit" value="submit" [disabled]="itemForm.invalid">
+
+   <p *ngIf="message" style="text-align:center; margin-top:10px;">
+  {{ message }}
+</p>
+
+  </form>
+</div>

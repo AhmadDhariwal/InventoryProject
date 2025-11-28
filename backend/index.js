@@ -3,12 +3,18 @@ const path = require('path');
 const inventoryschema = require("./src/models/model");
 const { connecttomongodb} = require('./connect');
 const route = require("./src/routes/route");
+const cors = require('cors')
+
 
 
 const app = express();
 const port = 3000;
 
+const allowedOrigins = ['http://localhost:4200'];
 
+app.use(cors({
+  origin: allowedOrigins
+}));
 
 connecttomongodb('mongodb://localhost:27017/inventorymanagement')
 .then(() =>   console.log('MongoDB connected'))

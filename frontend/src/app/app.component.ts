@@ -1,23 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { NavbarComponent } from "./components/navbar/navbar.component";
-import { ItemEditComponent } from "./components/item-edit/item-edit.component";
-import { CreatepageComponent } from "./components/createpage/createpage.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, ItemEditComponent, CreatepageComponent],
+  imports: [RouterOutlet,NavbarComponent],
   // templateUrl: './app.component.html',
   // styleUrl: './app.component.scss'
   template: `
-  <app-navbar> </app-navbar>
 
-  <main>
-    <router-outlet>
-     <app-createpage>   </app-createpage>
-    </router-outlet>
-  </main>
+   <router-outlet></router-outlet>
   `
 })
 export class AppComponent {

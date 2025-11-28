@@ -9,10 +9,9 @@ async function createitem (req, res) {
     if (!body.name || !body.quantity || !body.price || !body.category) {
       return res.status(400).json({ error: "Data is required" });
     }
-    const generatedId =  shortid.generate();   // We can also use it for the generateid `ITEM_${Date.now()}`;
+    //const generatedId =  shortid.generate();   // We can also use it for the generateid `ITEM_${Date.now()}`;
 
     const createditem = await inventoryschema.create({
-        id : generatedId,
         name: body.name,
         quantity : body.quantity,
         price : body.price,
