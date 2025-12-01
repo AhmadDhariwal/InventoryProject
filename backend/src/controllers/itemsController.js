@@ -73,7 +73,7 @@ async function getbyid(req,res) {
         }
       
 
-        const entry = await inventoryschema.findOne({ id : searchid});
+        const entry = await inventoryschema.findOne({ _id : searchid});
 
     
     if(!entry) return res.status(404).json({error : "Not found "});
@@ -104,16 +104,18 @@ async function updatebyid(req,res){
    const body = req.body;
     const updateid = req.params.id;
 
-       if(!body.price || body.price < 0 || body.price == 0 || body.quantity ||body.quantity <0 || !body.quantity === 0){
+       if (!body){//(!body.price || body.price < 0 || body.price == 0 || body.quantity ||body.quantity <0 || !body.quantity === 0){
         return res.status(400).json({error : "Not an Updated term"});
        }
     
         const data = await inventoryschema.findOneAndUpdate(
-          {id : updateid},
+          {_id : updateid},
           {
         $set : {
+          name : String(body.name),
           price : Number(body.price),
           quantity : Number(body.quantity),
+          category : String(body.category),
   }
   },
   {new : true}
@@ -140,7 +142,7 @@ async function deletebyid(req,res){
           return res.status(400).json({error: "bad request"});
 
         }
-        const entry = await inventoryschema.findOneAndDelete({ id : searchid});
+        const entry = await inventoryschema.findOneAndDelete({ _id : searchid});
     
     if(!entry) return res.status(404).json({error : "Not found "});
     return res.status(201).json({

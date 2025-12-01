@@ -1,14 +1,20 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { NavbarComponent } from "../navbar/navbar.component";
+import { ItemService } from './../../services/item.service';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-createpage',
   standalone: true,
-  imports: [RouterLink, NavbarComponent],
+  imports: [RouterLink,CommonModule],
   templateUrl: './createpage.component.html',
   styleUrl: './createpage.component.scss'
 })
-export class CreatepageComponent {
-     hello = signal("Hello world");
+export class CreatepageComponent implements OnInit{
+     private ItemService = inject(ItemService);
+     private router = inject(Router);
+
+     ngOnInit(): void {
+
+     }
 }

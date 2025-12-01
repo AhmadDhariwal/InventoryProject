@@ -9,7 +9,7 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
   // templateUrl: './app.component.html',
   // styleUrl: './app.component.scss'
   template: `
-
+   <app-navbar></app-navbar>
    <router-outlet></router-outlet>
   `
 })

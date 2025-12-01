@@ -1,1 +1,28 @@
-<p>item-edit works!</p>
+<div class="edit-container" *ngIf="items">
+  <h2>Edit Item</h2>
+
+  <form (ngSubmit)="onUpdate(items.id,items)" class="edit-form">
+
+    <label>Name</label>
+    <input type="text" [(ngModel)]="items.name" name="name" required />
+
+    <label>Quantity</label>
+    <input type="number" [(ngModel)]="items.quantity" name="quantity" required />
+
+    <label>Price</label>
+    <input type="number" [(ngModel)]="items.price" name="price" required />
+
+    <label>Category</label>
+    <input type="text" [(ngModel)]="items.category" name="category" required />
+
+    <div class="buttons">
+      <button type="submit" class="update-btn" (click)="onUpdate(items.id,items)">Update</button>
+      <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
+    </div>
+
+  </form>
+</div>
+
+<div *ngIf="!items" class="loading-msg">
+  Loading item details...
+</div>

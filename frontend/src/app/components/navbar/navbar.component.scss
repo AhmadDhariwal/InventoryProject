@@ -1,22 +1,22 @@
-header{
-  display: flex;
+.navbar {
+  width: 100%;
   background-color: teal;
-  color: black;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
   align-items: center;
-
+  margin-bottom: 50px;
 }
 
-nav{
-  span{
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   color: white;
-   margin-left: 500px;
-   height: 100px;
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-}
-span{
-    font-size: large;
+.nav-title {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 1px;
 }

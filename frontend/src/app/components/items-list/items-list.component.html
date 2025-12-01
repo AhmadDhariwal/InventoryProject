@@ -1,1 +1,65 @@
-<p>items-list works!</p>
+<div class="items-container">
+
+  <div class="header">
+    <input type="text" placeholder="Search by name or category" [(ngModel)]="searchTerm" />
+    <button routerLink="/create" class="add-button">Add Item</button>
+  </div>
+
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of filteredItems">
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.category }}</td>
+        <td>
+          <button [routerLink]="['/edit', item._id]" class="edit-button">Edit</button>
+          <button [routerLink]="['/delete', item._id]" class="delete-button">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="items.length === 0" class="no-items">
+    No items found.
+  </div>
+
+</div>
+
+
+<!--<div class="itemlist">
+  <table>
+   <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Category</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr *ngFor = "let x of items">
+      <td>{{x.name}}</td>
+      <td>{{x.quantity}}</td>
+      <td>{{x.price}}</td>
+      <td>{{x.category}}</td>
+
+      <td>
+        <button>Edit</button>
+        <button  [routerLink]="['/delete', x.id]>Delete</button>
+      </td>
+    </tr>
+   </tbody>
+  </table>
+
+</div>
+-->

@@ -1,6 +1,14 @@
-nav{
+div
+{
   display: flex;
-  align-items: center;
-  background-color: black;
+  justify-content: center;
+}
+button{
+  font-size:xx-large;
+  background-color: teal;
   color: white;
+  border-color: solid black ;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 }
