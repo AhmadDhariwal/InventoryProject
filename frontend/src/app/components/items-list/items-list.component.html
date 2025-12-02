@@ -35,31 +35,22 @@
 
 </div>
 
+<div class="pagination-container">
 
-<!--<div class="itemlist">
-  <table>
-   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Category</th>
-    </tr>
-   </thead>
-   <tbody>
-    <tr *ngFor = "let x of items">
-      <td>{{x.name}}</td>
-      <td>{{x.quantity}}</td>
-      <td>{{x.price}}</td>
-      <td>{{x.category}}</td>
+    <button class="page-btn"
+            (click)="prevPage()"
+            [disabled]="currentpage === 1">
+      ← Previous
+    </button>
 
-      <td>
-        <button>Edit</button>
-        <button  [routerLink]="['/delete', x.id]>Delete</button>
-      </td>
-    </tr>
-   </tbody>
-  </table>
+   <span > page{{currentpage}}</span>
 
-</div>
--->
+    <button class="page-btn"
+            (click)="nextPage()"
+            [disabled]="currentpage * limit >= totalitems">
+      Next →
+    </button>
+
+  </div>
+
+

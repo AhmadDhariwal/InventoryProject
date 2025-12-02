@@ -36,8 +36,9 @@ export class ItemService {
 //   );
 //  }
 
- getitem() {
-  return this.http.get<Inventory[]>(this.apiurl).pipe(
+ getitem(page :number , limit:number) {
+  const url = `${this.apiurl}?page=${page}&limit=${limit}`;
+  return this.http.get<Inventory>(url).pipe(
   catchError(err => {
     console.error("Get items err : ",err);
     return throwError(() => err);

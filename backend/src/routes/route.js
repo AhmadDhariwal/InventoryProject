@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post('/', createitem);
 router.get('/',getitems);
-router.get('/all', getall);
 router.get('/:id', getbyid);
+router.get('/all', getall);
 router.put('/:id',updatebyid);
 router.delete('/:id', deletebyid);
 
