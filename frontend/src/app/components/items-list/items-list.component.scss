@@ -106,3 +106,33 @@
     }
   }
 }
+.confirm-row {
+  background-color: #ffe6e6; // light red background
+}
+
+.confirm-box {
+  padding: 10px;
+  border: 1px solid red;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.btn-yes {
+  background-color: red;
+  color: white;
+  padding: 5px 15px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.btn-no {
+  background-color: gray;
+  color: white;
+  padding: 5px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+

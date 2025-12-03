@@ -1,24 +1,86 @@
 <div class="form">
-  <form class="form-item" (ngsubmit)="onCreate()"   #itemForm="ngForm"  >
+  <form [formGroup]="profileForm" class="form-item" (ngSubmit)="onCreate()">
 
 
     <label for="name" >Name</label>
-    <input [(ngModel)]="newItem.name" type="text" placeholder="Name of the Product" id="name" name="name" required><br>
+    <input type="text" placeholder="Name of the Product" id="name" formControlName="name">
+
+    @if (submitted || profileForm.get('name')?.invalid && profileForm.get('name')?.dirty || profileForm.get('name')?.touched) {
+
+    <div class="error-box">
+        @if (profileForm.get('name')?.hasError('required')) {
+          <div>Name is required.</div>
+        }
+       @if (profileForm.get('name')?.hasError('minlength')){
+        <div>Length Should be greater than 10</div>
+       }
+       @if (profileForm.get('name')?.hasError('maxlength')){
+        <div>Length Should be less than 50</div>
+       }
+       @if (profileForm.get('name')?.hasError('pattern')){
+        <div>Name should has not special chracter and spaces</div>
+       }
+      </div>
+    }
+    <br>
 
     <label for="quantity">Quantity</label>
-    <input [(ngModel)]="newItem.quantity" type="number" placeholder="Describe the Quantity" id="quantity" name="quantity" required><br>
+    <input type="number" placeholder="Describe the Quantity" id="quantity" formControlName="quantity" ><br>
+
+    @if (submitted || profileForm.get('quantity')?.invalid && profileForm.get('quantity')?.dirty || profileForm.get('quantity')?.touched) {
+
+    <div class="error-box">
+        @if (profileForm.get('quantity')?.hasError('required')) {
+          <div>Quantity is required.</div>
+        }
+       @if (profileForm.get('quantity')?.hasError('max')){
+        <div>Quantity Should be less than 5</div>
+       }
+       </div>
+      }
 
      <label for="price">Price</label>
-    <input [(ngModel)]="newItem.price" type="number" placeholder="Describe the Price" id="price" name="price" required ><br>
+    <input type="number" placeholder="Describe the Price" id="price" formControlName="price"><br>
+
+    @if (submitted || profileForm.get('price')?.invalid && profileForm.get('price')?.dirty || profileForm.get('price')?.touched) {
+
+    <div class="error-box">
+        @if (profileForm.get('price')?.hasError('required')) {
+          <div>Price is required.</div>
+        }
+       @if (profileForm.get('price')?.hasError('min')){
+        <div>Length Should be greater than 15</div>
+       }
+       @if (profileForm.get('price')?.hasError('max')){
+        <div>Length Should be less than 100</div>
+       }
+      </div>
+    }
 
      <label for="category">Category</label>
-    <input [(ngModel)]="newItem.category" type="text" placeholder="Describe the Category" id="category" name="category" required><br>
+    <input type="text" placeholder="Describe the Category" id="category" formControlName="category" required><br>
 
-    <input (click)="onCreate()" type="submit" value="submit" [disabled]="itemForm.invalid">
+    @if (submitted || profileForm.get('category')?.invalid && profileForm.get('category')?.dirty || profileForm.get('category')?.touched) {
 
-   <p *ngIf="message" style="text-align:center; margin-top:10px;">
+    <div class="error-box">
+        @if (profileForm.get('category')?.hasError('required')) {
+          <div>Category is required.</div>
+        }
+       @if (profileForm.get('category')?.hasError('max')){
+        <div>Length Should be less than 250</div>
+       }
+       @if (profileForm.get('category')?.hasError('pattern')){
+        <div>Category should have 2 words with space</div>
+       }
+      </div>
+    }
+
+
+    <input (click)="onCreate()" type="submit" value="submit"  >
+
+  <!-- <p *ngIf="message" style="text-align:center; margin-top:10px;">
   {{ message }}
-</p>
+</p>-->
 
   </form>
 </div>

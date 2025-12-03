@@ -22,10 +22,20 @@
         <td>{{ item.price }}</td>
         <td>{{ item.category }}</td>
         <td>
+          <tr *ngIf="itemToDelete && itemToDelete._id === item._id" class="confirm-row">
+  <td colspan="5">
+    <div class="confirm-box">
+      <p>Are you sure you want to delete <strong>{{itemToDelete.name}}</strong>?</p>
+      <button class="btn-yes" (click)="deleteItem(itemToDelete._id)">Yes, Delete</button>
+      <button class="btn-no" (click)="cancelDelete()">No, Cancel</button>
+    </div>
+  </td>
+</tr>
           <button [routerLink]="['/edit', item._id]" class="edit-button">Edit</button>
-          <button [routerLink]="['/delete', item._id]" class="delete-button">Delete</button>
+          <button (click)="confirmDelete(item)" class="delete-button">Delete</button>
         </td>
       </tr>
+
     </tbody>
   </table>
 

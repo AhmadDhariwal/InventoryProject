@@ -15,6 +15,10 @@ export class ItemsListComponent implements OnInit{
  private ItemService = inject(ItemService);
   private router = inject(Router);
 
+itemToDelete: any = null;
+showDeleteConfirmation: boolean = false;
+
+
  items: any[] = [];
  currentpage = 1;
  totalitems = 0;
@@ -52,6 +56,27 @@ export class ItemsListComponent implements OnInit{
    });
 
 }
+confirmDelete(item:any){
+  this.itemToDelete = item;
+}
+cancelDelete(){
+  this.itemToDelete = null;
+  this.showDeleteConfirmation = false;
+}
+deleteItem(id: string) {
+  this.ItemService.deleteitem(id).subscribe({
+    next: () => {
+      this.showDeleteConfirmation = false;
+      this.itemToDelete = null;
+      this.loadItems();
+    },
+    error: (err) => {
+      console.error('Error deleting item', err);
+    }
+  });
+}
+
+
 nextPage()
 {
    if(this.currentpage * this.limit <this.totalitems){

@@ -16,7 +16,7 @@
     <input type="text" [(ngModel)]="items.category" name="category" required />
 
     <div class="buttons">
-      <button type="submit" class="update-btn" (click)="onUpdate(items.id,items)">Update</button>
+      <button [routerLink]="['/itemcreate']" type="submit" class="update-btn" (click)="onUpdate(items.id,items)">Update</button>
       <button type="button" class="cancel-btn" (click)="onCancel()">Cancel</button>
     </div>
 

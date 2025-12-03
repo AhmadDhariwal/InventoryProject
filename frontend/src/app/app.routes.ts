@@ -22,30 +22,14 @@ export const routes: Routes = [
     }
   },
 
-{
-    path : 'page',
-    loadComponent : () => {
-      return import('./components/createpage/createpage.component').then(
-        (m) => m.CreatepageComponent,
+  {
+    path:'edit/:id',
+    loadComponent : () =>{
+      return import('./components/itemcreate/itemcreate.component').then(
+        (m) => m.ItemcreateComponent,
       )
     }
   },
 
-  {
-    path:'edit/:id',
-    loadComponent : () =>{
-      return import('./components/item-edit/item-edit.component').then(
-        (m) => m.ItemEditComponent,
-      )
-    }
-  },
-  {
-    path:'delete/:id',
-    loadComponent:() => {
-      return import('./components/item-delete/item-delete.component').then(
-        (m) => m.ItemDeleteComponent,
-      )
-    }
-  }
 ];
 

@@ -1,33 +1,118 @@
 import { ItemService } from './../../services/item.service';
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from "@angular/router";
-import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from "@angular/router";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormControl,FormGroup,FormBuilder } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-itemcreate',
   standalone: true,
-  imports: [RouterLink, FormsModule, NgIf],
+  imports: [RouterLink, FormsModule, NgIf, ReactiveFormsModule],
   templateUrl: './itemcreate.component.html',
   styleUrl: './itemcreate.component.scss'
 })
 export class ItemcreateComponent {
     private itemService = inject(ItemService);
+      items: any = [];
+   userid: string | null = null;
 
-    constructor(private router: Router) {}
+    constructor(
+      private router: Router,
+      private route : ActivatedRoute
+    ) {}
+
+      profileForm = new FormGroup({
+    name: new FormControl('' , [
+      Validators.required,
+      Validators.minLength(10),
+      Validators.maxLength(50),
+      Validators.pattern(/^[a-zA-Z]+$/)
 
 
-    newItem = { name: '', quantity: 0, price: 0, category: '' };
+    ]),
+
+        quantity : new FormControl(null,[
+        Validators.required,
+        Validators.max(5),
+        ]),
+
+
+    price: new FormControl(null,[
+        Validators.required,
+        Validators.min(15),
+        Validators.max(100),
+
+
+
+    ]),
+    category : new FormControl('',[
+       Validators.required,
+        Validators.max(250),
+    Validators.pattern('^[A-Za-z]+\\s[A-Za-z]+$')
+
+    ]),
+
+   })
+
+    // ngOnInit(): void {
+
+    //   this.userid = this.route.snapshot.paramMap.get('id');
+    //   if(!this.userid) {this.router.navigate(['/']); return; }
+
+    //     this.itemService.getitembyid(this.userid).subscribe({
+    //       next: (data) =>{
+    //         console.log("Items are : " , data);
+    //         this.items = data;
+    //       },
+    //       error: (error) => {
+    //         console.error("Error in fetching items :" , error);
+    //       }
+    //     });
+    // }
+    // onUpdate(id : string, items : string ){
+    //     this.itemService.updateitem(this.items, this.userid!).subscribe({
+    //       next: (data) =>{
+    //         console.log("Items updated successfully",data);
+    //         this.items = data;
+    //       this.router.navigate(['/']);
+
+    //       },
+    //       error: (error) => {
+    //         console.error("Error in fetching items :", error);
+    //       }
+    //     })
+    // }
+    // onCancel(){
+    //   this.router.navigate(['/']);
+    // }
     message ='';
 
-    onCreate() {
-         console.log('Creating item:', this.newItem);
+      submitted = false;
 
-      this.itemService.createitems(this.newItem).subscribe({
+   onCreate() {
+  this.submitted = true;
+
+  if (this.profileForm.invalid) {
+    return;
+  }
+         const formValue = this.profileForm.value;
+         const item = {
+           name: formValue.name || '',
+           price: formValue.price || 0,
+           quantity: formValue.quantity || 0,
+           category: formValue.category || '',
+
+         };
+         console.log('Creating item:', item);
+
+      this.itemService.createitems(item).subscribe({
         next:(Response) => {
           this.message= "Item Created Successfully";
-          this.newItem = { name: '', quantity: 0, price: 0, category: '' };
+          this.profileForm.reset();
           this.router.navigate(['/']);
         },
         error:(error) => {
@@ -37,4 +122,7 @@ export class ItemcreateComponent {
 
     });
 }
+
 }
+
+
