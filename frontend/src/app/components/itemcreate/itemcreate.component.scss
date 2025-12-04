@@ -28,7 +28,19 @@ input{
    height: 50px;
 
 }
-
+button{
+  width: 150px;
+  padding: 10px;
+  background-color: rgb(89, 222, 240);
+  border: none;
+  border-radius: 40px;
+  color: black;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin: 20px auto 20px auto ;
+  font-family: 'Times New Roman', Times, serif;
+}
 
 .form-item input.ng-invalid.ng-touched {
   border-color: #e74c3c;
@@ -62,8 +74,3 @@ input{
   margin-top: 10px;
 }
 */
-
-/*.form-item input[type="submit"]:disabled {
-  background-color: #9acccc;
-  cursor: not-allowed;
-}*/

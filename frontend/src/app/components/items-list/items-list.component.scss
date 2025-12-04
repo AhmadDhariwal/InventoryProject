@@ -107,14 +107,16 @@
   }
 }
 .confirm-row {
-  background-color: #ffe6e6; // light red background
+  background-color: lightgray;
 }
 
 .confirm-box {
   padding: 10px;
-  border: 1px solid red;
+  border: 1px solid black;
+  background-color: teal;
+  color: white;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .btn-yes {
@@ -124,7 +126,7 @@
   margin-right: 10px;
   border: none;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 15px;
 }
 
 .btn-no {
@@ -133,6 +135,6 @@
   padding: 5px 15px;
   border: none;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 15px;
 }
 

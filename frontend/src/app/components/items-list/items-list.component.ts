@@ -24,17 +24,27 @@ showDeleteConfirmation: boolean = false;
  totalitems = 0;
  limit=10;
 
+
  searchTerm: string = '';
 
   array =[];
 
- get filteredItems() {
-   if (!this.searchTerm) return this.items;
-   return this.items.filter(item =>
-     item.name?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-     item.category?.toLowerCase().includes(this.searchTerm.toLowerCase())
-   );
- }
+//  get filteredItems() {
+//    if (!this.searchTerm) return this.items;
+//    return this.items.filter(item =>
+//      item.name?.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+//      item.category?.toLowerCase().includes(this.searchTerm.toLowerCase())
+//    );
+//  }
+
+// get filteredItems() {
+//   return this.items;
+// }
+ onSearch() {
+  this.currentpage = 1;
+  this.loadItems();
+}
+
 
    ngOnInit(): void {
       this.loadItems();
@@ -42,10 +52,10 @@ showDeleteConfirmation: boolean = false;
    loadItems(){
 
    console.log("Onload");
-   this.ItemService.getitem(this.currentpage , this.limit).subscribe
+   this.ItemService.getitem(this.currentpage , this.limit, this.searchTerm || '').subscribe
    ({
     next: (data : any) =>{
-      console.log("Items are :", data );
+     // console.log("Items are :", data );
       this.items= data.items;
       this.totalitems = data.total;
     },
@@ -56,6 +66,9 @@ showDeleteConfirmation: boolean = false;
    });
 
 }
+
+
+
 confirmDelete(item:any){
   this.itemToDelete = item;
 }

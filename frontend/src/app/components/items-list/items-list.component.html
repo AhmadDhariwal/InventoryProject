@@ -1,7 +1,7 @@
 <div class="items-container">
 
   <div class="header">
-    <input type="text" placeholder="Search by name or category" [(ngModel)]="searchTerm" />
+    <input type="text" placeholder="Search by name or category" [(ngModel)]="searchTerm" (input)="onSearch()"/>
     <button routerLink="/create" class="add-button">Add Item</button>
   </div>
 
@@ -16,15 +16,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of filteredItems">
+      <tr *ngFor="let item of items">
         <td>{{ item.name }}</td>
         <td>{{ item.quantity }}</td>
         <td>{{ item.price }}</td>
         <td>{{ item.category }}</td>
         <td>
-          <tr *ngIf="itemToDelete && itemToDelete._id === item._id" class="confirm-row">
-  <td colspan="5">
-    <div class="confirm-box">
+        <tr *ngIf="itemToDelete && itemToDelete._id === item._id" class="confirm-row">
+      <td colspan="5">
+      <div class="confirm-box">
       <p>Are you sure you want to delete <strong>{{itemToDelete.name}}</strong>?</p>
       <button class="btn-yes" (click)="deleteItem(itemToDelete._id)">Yes, Delete</button>
       <button class="btn-no" (click)="cancelDelete()">No, Cancel</button>
@@ -43,9 +43,7 @@
     No items found.
   </div>
 
-</div>
-
-<div class="pagination-container">
+<div class="pagination-container" *ngIf="items.length>0">
 
     <button class="page-btn"
             (click)="prevPage()"
@@ -60,7 +58,5 @@
             [disabled]="currentpage * limit >= totalitems">
       Next →
     </button>
-
   </div>
-
-
+  </div>

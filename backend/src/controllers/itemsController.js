@@ -31,13 +31,20 @@ async function createitem (req, res) {
 
 async function getitems(req,res) {
     try{
-      const {category,page =1 ,limit =10} = req.query;
-
+      const {page = 1 ,limit =10,search} = req.query;
+console.log("Search query:", req.query);
       const filter ={};
 
-       if(category){
-        filter.category = category;
-       }
+    if (search && search.trim() !== '') {
+  filter.$or = [
+    { name: { $regex: search, $options: "i" } },
+    { category: { $regex: search, $options: "i" } }
+  ];
+}
+
+      //  if(category){
+      //   filter.category = category;
+      //  }
        const skip = (page - 1) * limit;
        
        const items =  await inventoryschema 
@@ -45,7 +52,7 @@ async function getitems(req,res) {
        .skip(skip)
        .limit(Number(limit));
     
-    
+    console.log("Items fetched :", items);
     const total = await inventoryschema.countDocuments(filter);
 
     return res.json({
