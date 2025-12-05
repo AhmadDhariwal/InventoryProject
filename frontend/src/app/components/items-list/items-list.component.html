@@ -1,7 +1,7 @@
 <div class="items-container">
 
   <div class="header">
-    <input type="text" placeholder="Search by name or category" [(ngModel)]="searchTerm" (input)="onSearch()"/>
+    <input type="text" placeholder="Search by name or category" [formControl]="searchControl" />  <!--[(ngModel)]="searchControl" (input)="onSearch()"-->
     <button routerLink="/create" class="add-button">Add Item</button>
   </div>
 
@@ -39,7 +39,7 @@
     </tbody>
   </table>
 
-  <div *ngIf="items.length === 0" class="no-items">
+  <div *ngIf="items.length === 0 " class="no-items">
     No items found.
   </div>
 

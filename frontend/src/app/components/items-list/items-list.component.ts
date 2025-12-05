@@ -3,17 +3,23 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { debounceTime,distinctUntilChanged,switchMap } from 'rxjs';
+import { Pipe } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-items-list',
   standalone: true,
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './items-list.component.html',
   styleUrl: './items-list.component.scss'
 })
 export class ItemsListComponent implements OnInit{
  private ItemService = inject(ItemService);
   private router = inject(Router);
+    searchControl = new FormControl('');
+
 
 itemToDelete: any = null;
 showDeleteConfirmation: boolean = false;
@@ -25,7 +31,7 @@ showDeleteConfirmation: boolean = false;
  limit=10;
 
 
- searchTerm: string = '';
+
 
   array =[];
 
@@ -40,6 +46,19 @@ showDeleteConfirmation: boolean = false;
 // get filteredItems() {
 //   return this.items;
 // }
+
+
+  waitsearch() {
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged()
+      )
+      .subscribe(query => {
+        this.onSearch();
+      });
+  }
+
  onSearch() {
   this.currentpage = 1;
   this.loadItems();
@@ -48,11 +67,12 @@ showDeleteConfirmation: boolean = false;
 
    ngOnInit(): void {
       this.loadItems();
+      this.waitsearch();
    }
    loadItems(){
 
    console.log("Onload");
-   this.ItemService.getitem(this.currentpage , this.limit, this.searchTerm || '').subscribe
+   this.ItemService.getitem(this.currentpage , this.limit, this.searchControl.value || '').subscribe
    ({
     next: (data : any) =>{
      // console.log("Items are :", data );
@@ -70,7 +90,9 @@ showDeleteConfirmation: boolean = false;
 
 
 confirmDelete(item:any){
+
   this.itemToDelete = item;
+  this.loadItems();
 }
 cancelDelete(){
   this.itemToDelete = null;
@@ -81,6 +103,11 @@ deleteItem(id: string) {
     next: () => {
       this.showDeleteConfirmation = false;
       this.itemToDelete = null;
+
+      if (this.items.length === 1 && this.currentpage > 1) {
+       this.currentpage--;
+      }
+
       this.loadItems();
     },
     error: (err) => {

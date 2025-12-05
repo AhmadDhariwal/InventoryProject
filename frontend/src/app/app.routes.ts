@@ -4,9 +4,18 @@ import { ItemcreateComponent } from './components/itemcreate/itemcreate.componen
 export const routes: Routes = [
 
 
+  {
+
+    path:'',
+    loadComponent :() => {
+      return import('./components/singup/singup.component').then
+      ((m) => m.SingupComponent,
+    )
+    }
+  },
 
   {
-     path : '',
+     path : 'inventory/all',
     loadComponent : () => {
       return import('./components/items-list/items-list.component').then(
         (m) => m.ItemsListComponent,
