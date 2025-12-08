@@ -3,7 +3,8 @@ const path = require('path');
 const inventoryschema = require("./src/models/model");
 const { connecttomongodb} = require('./connect');
 const route = require("./src/routes/route");
-const cors = require('cors')
+const cors = require('cors');
+const userroute = require('./src/routes/user');
 
 
 
@@ -28,10 +29,11 @@ app.use(express.urlencoded({extended :false}));
 
 
 app.use('/items',route);
+app.use('/user',userroute);
 
-app.get('/', (req, res) => {
-  res.send('Hello World'); 
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello World'); 
+// });
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Not Found', path: req.originalUrl });

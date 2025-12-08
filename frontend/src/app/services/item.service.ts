@@ -2,6 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { Inventory } from '../../../model/inventory';
 import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { signup } from '../../../model/signup';
+import { login } from '../../../model/login';
 import { HttpParams } from '@angular/common/http';
 
 
@@ -11,6 +13,26 @@ import { HttpParams } from '@angular/common/http';
 export class ItemService {
     http = inject(HttpClient);
     private apiurl = `http://localhost:3000/items`;
+    private signupurl = `http://localhost:3000/user`;
+
+
+  usersignup(item : signup){
+     return this.http.post<signup>(this.signupurl,item).pipe(
+      catchError(err => {
+         console.error('User Signup error : ', err);
+         return throwError(()=> err);
+      })
+     );
+  }
+  userlogin(item : login){
+    const url = `${this.signupurl}/login`;
+    return this.http.post<login>(url, item).pipe(
+     catchError(err => {
+        console.error('User Login error : ', err);
+        return throwError(()=> err);
+     })
+    );
+ }
 
 
  createitems(item : Inventory) {
