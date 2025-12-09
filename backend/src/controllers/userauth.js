@@ -1,7 +1,9 @@
 const express = require('express');
 const userschema = require ('../models/user');
-const {v4: uuidv4} = require('uuid')
+const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
 
+//const { v4: uuidv4 } = require('uuid');
 
 async function handleusersignup(req,res){
 
@@ -11,15 +13,21 @@ async function handleusersignup(req,res){
           return res.status(400).json({ error: "Data is required" });
         }
         //const generatedId =  shortid.generate();   // We can also use it for the generateid `ITEM_${Date.now()}`;
-    
+     //   const hashedpassword = await bcrypt.hash(body.password, 8);
         const createduser = await userschema.create({
             name: body.name,
             email : body.email,
             username : body.username,
             password: body.password,
         })
+      await createduser.save();
+
+        const token = jwt.sign({ userid : createduser._id }, 'Hello', {expiresIn : '1h'});
+
         res.status(201).json({
+
              message: "User created successfully",
+             token: token,
             item: createduser,
         });
     
@@ -43,12 +51,15 @@ async function handleuserlogin(req,res){
             username : body.username,
             password: body.password,
         })
+       // const passwordMatch = await bcrypt.compare(password, logineduser.password);
         if(!logineduser){
             return res.status(400).json({ error: "Invalid username or password" });
         }
+        const token = jwt.sign({ userid : logineduser._id }, 'Hello', {expiresIn : '1h'});
         res.status(201).json({
              message: "User found successfully",
-            item: logineduser,
+             token: token,
+            item: logineduser ,
         });
     
             }
@@ -57,6 +68,7 @@ async function handleuserlogin(req,res){
         res.status(500).json({ error: "Server error" });
       }
     }
+
 
 module.exports = {
     handleusersignup,

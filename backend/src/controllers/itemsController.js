@@ -16,6 +16,7 @@ async function createitem (req, res) {
         quantity : body.quantity,
         price : body.price,
         category: body.category,
+        createdby : req.userid,
     })
     res.status(201).json({
          message: "Item created successfully",
@@ -33,12 +34,12 @@ async function getitems(req,res) {
     try{
       const {page = 1 ,limit =10,search} = req.query;
 console.log("Search query:", req.query);
-      const filter ={};
+      const filter ={ createdby : req.userid};
 
     if (search && search.trim() !== '') {
   filter.$or = [
     { name: { $regex: search, $options: "i" } },
-    { category: { $regex: search, $options: "i" } }
+    { category: { $regex: search, $options: "i" } },
   ];
 }
 

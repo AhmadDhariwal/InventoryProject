@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 const inventoryschema = new mongoose.Schema( {
 
-   
     name : {
           type : String ,
         required : true ,
@@ -23,8 +22,11 @@ const inventoryschema = new mongoose.Schema( {
     category : {
          type : String ,
         required : true ,
+    },
+    createdby : {
+        type :String,
+        required : true ,
     }
-
 
 },{timestamps : true});
 

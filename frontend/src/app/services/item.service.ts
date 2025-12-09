@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { signup } from '../../../model/signup';
 import { login } from '../../../model/login';
+import { HttpHeaders } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 
 
@@ -15,6 +16,14 @@ export class ItemService {
     private apiurl = `http://localhost:3000/items`;
     private signupurl = `http://localhost:3000/user`;
 
+
+
+private getAuthHeaders() {
+  const token = localStorage.getItem('token');
+  return new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+}
 
   usersignup(item : signup){
      return this.http.post<signup>(this.signupurl,item).pipe(
@@ -37,7 +46,10 @@ export class ItemService {
 
  createitems(item : Inventory) {
 
-    return this.http.post<Inventory>(this.apiurl,item).pipe(
+    return this.http.post<Inventory>(this.apiurl,item,{
+        headers: this.getAuthHeaders()
+
+    }).pipe(
     catchError(err => {
       console.error('Create item error : ', err);
       return throwError(()=> err);
@@ -60,7 +72,9 @@ export class ItemService {
 
  getitem(page :number , limit:number , search : string='' ) {
   const url = `${this.apiurl}?page=${page}&limit=${limit}&search=${search}`;
-  return this.http.get<Inventory>(url).pipe(
+  return this.http.get<Inventory>(url,{
+      headers: this.getAuthHeaders()
+  }).pipe(
   catchError(err => {
     console.error("Get items err : ",err);
     return throwError(() => err);
@@ -70,7 +84,10 @@ export class ItemService {
 
  getitembyid(id: string) {
    const url = `${this.apiurl}/${id}`;
-    return this.http.get<Inventory>(url).pipe(
+    return this.http.get<Inventory>(url,{
+        headers: this.getAuthHeaders()
+
+    }).pipe(
      catchError(err => {
       console.error("Get item by id error : ",err);
       return throwError(() => err);
@@ -79,7 +96,10 @@ export class ItemService {
 }
  updateitem(item: Inventory,id:string) {                           //id: string, updateData: Partial<Inventory>
      const url = `${this.apiurl}/${id}`;
-     return this.http.put<Inventory>(url,item).pipe(       //    return this.http.put<Inventory>(url, updateData).pipe(
+     return this.http.put<Inventory>(url,item,{
+        headers: this.getAuthHeaders()
+
+     }).pipe(       //    return this.http.put<Inventory>(url, updateData).pipe(
 
       catchError(err => {
         console.error("Update item error", err);
@@ -90,7 +110,10 @@ export class ItemService {
 
   deleteitem(id : string){
      const url = `${this.apiurl}/${id}`;
-     return this.http.delete<Inventory>(url).pipe(
+     return this.http.delete<Inventory>(url,{
+        headers: this.getAuthHeaders()
+
+     }).pipe(
       catchError(err => {
         console.error("Delete Item Error : ", err);
          return throwError(() => err);

@@ -5,6 +5,8 @@ const { connecttomongodb} = require('./connect');
 const route = require("./src/routes/route");
 const cors = require('cors');
 const userroute = require('./src/routes/user');
+const { verifytoken } = require('./src/middleware/auth.middleware');
+
 
 
 
@@ -28,7 +30,7 @@ connecttomongodb('mongodb://localhost:27017/inventorymanagement')
 app.use(express.urlencoded({extended :false}));
 
 
-app.use('/items',route);
+app.use('/items',verifytoken, route);
 app.use('/user',userroute);
 
 // app.get('/', (req, res) => {

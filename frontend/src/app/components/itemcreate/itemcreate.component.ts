@@ -150,11 +150,11 @@ export class ItemcreateComponent implements OnInit {
 
         if (this.userid) {
           this.itemService.updateitem(this.items,this.userid).subscribe(() => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/inventory/all']);
           });
         } else {
           this.itemService.createitems(this.items).subscribe(() => {
-            this.router.navigate(['/']);
+            this.router.navigate(['/inventory/all']);
           });
         }
       }

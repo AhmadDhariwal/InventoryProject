@@ -1,5 +1,6 @@
 const express = require('express');
 const inventoryschema = require("../models/model");
+const {verifytoken} = require("../middleware/auth.middleware");
 const {createitem,getitems,getbyid,getall,updatebyid,deletebyid } = require('../controllers/itemsController');
 const router = express.Router();
 

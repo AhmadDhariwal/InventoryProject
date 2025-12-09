@@ -56,16 +56,22 @@ export class LoginComponent {
         this.submitted = true;
 
      if (this.userForm.invalid) {
+       this.message = "Please fill in all required fields correctly";
        return;
      }
+     this.message = '';
             this.items =this.userForm.value;
 
            this.ItemService.userlogin(this.items).subscribe(
           {
-           next:(response) => {
+           next:(response: any) => {
              console.log("User login successfully" , response);
              this.userForm.reset();
+             if (response.token) {
+               localStorage.setItem('token', response.token);
+             }
              this.router.navigate(['inventory/all']);
+
            },
            error:(error) => {
              console.error("Error in login", error);

@@ -37,10 +37,25 @@
        }
       </div>
     }
-    <input (click)="onsubmit()" type="submit" value="submit"  >
-    <div *ngIf="submitted" class="error-box">
+    <input (click)="onsubmit()" type="submit" value="Login"  >
+
+<!--<div>
+    @if ( submitted ||userForm.get('submit')?.invalid && userForm.get('submit')?.dirty || userForm.get('submit')?.touched) {
+     <div class="error-box">
+       {{message}}
+     </div>
+    }
+     </div>-->
+
+   <div>
+  @if (message) {
+    <div class="error-box">
       {{message}}
-  </div>
+    </div>
+  }
+</div>
+
+
      <button [routerLink]="['/']" type="submit"> Not Register? Sign Up here </button>
   </form>
 </div>
