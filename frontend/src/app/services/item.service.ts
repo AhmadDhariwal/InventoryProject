@@ -67,6 +67,17 @@ usersignup(item: signup) {
      })
     );
  }
+ getusers(){
+  const url = `${this.apiurl}/allusers`;
+    return this.http.get<Inventory>(url,{
+        headers: this.getAuthHeaders()
+    }).pipe(
+     catchError(err => {
+        console.error('Get users error : ', err);
+        return throwError(()=> err);
+     })
+    );
+ }
 
 
  createitems(item : Inventory) {

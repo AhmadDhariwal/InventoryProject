@@ -1,6 +1,7 @@
 const express = require ('express');
 const inventoryschema = require("../models/model");
 const shortid = require('shortid');
+const signup = require('../models/user');
 
 
 async function createitem (req, res) {
@@ -159,7 +160,7 @@ async function updatebyid(req,res){
        }
     
         const data = await inventoryschema.findOneAndUpdate(
-          {_id : updateid, createdby: req.userid},
+          {_id : updateid},
           {
         $set : {
           name : String(body.name),
@@ -192,7 +193,7 @@ async function deletebyid(req,res){
           return res.status(400).json({error: "bad request"});
 
         }
-        const entry = await inventoryschema.findOneAndDelete({ _id : searchid, createdby: req.userid });
+        const entry = await inventoryschema.findOneAndDelete({ _id : searchid});
     
     if(!entry) return res.status(404).json({error : "Not found "});
     return res.status(201).json({
@@ -206,6 +207,19 @@ async function deletebyid(req,res){
     }
 };
 
+async function getallusers(req, res) {
+     try {
+      const users = await signup.find({ });
+      return res.json(users);
+     }
+     catch(err){
+        console.error("Get Items : ",err);
+         res.status(500).json({ error : "Server Error" });
+
+     }
+};
+
+
 
 module.exports = {
 createitem ,
@@ -214,4 +228,5 @@ getitems,
  getall,
  updatebyid,
  deletebyid,
+ getallusers,
 }

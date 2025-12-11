@@ -34,6 +34,16 @@ export const routes: Routes = [
   },
 
   {
+     path : 'users/all',canActivate: [AuthGuard],
+    loadComponent : () => {
+      return import('./components/users/users.component').then(
+        (m) => m.UsersComponent,
+      )
+    }
+  },
+
+
+  {
     path : 'create',canActivate: [AuthGuard],
     loadComponent : () => {
       return import('./components/itemcreate/itemcreate.component').then(
