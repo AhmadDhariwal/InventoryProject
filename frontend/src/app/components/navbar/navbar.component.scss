@@ -1,17 +1,11 @@
 .navbar {
   width: 100%;
   background-color: teal;
-  padding: 20px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 20px;
   margin-bottom: 50px;
-}
-
-.nav-container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
 }
 
 .nav-title {
@@ -19,4 +13,56 @@
   font-size: 24px;
   font-weight: 600;
   letter-spacing: 1px;
+  margin: 0;
+}
+
+.Logout {
+  padding: 10px 20px;
+  background-color: rgb(89, 222, 240);
+  border: none;
+  border-radius: 40px;
+  color: black;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  margin-left: auto;
+  margin-right: 50px;
+}
+
+.Logout:hover {
+  background-color: rgb(70, 200, 220);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nav-title {
+    font-size: 20px;
+  }
+
+  .Logout {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .nav-title {
+    font-size: 18px;
+  }
+
+  .Logout {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
 }

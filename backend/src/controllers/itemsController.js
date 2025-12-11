@@ -34,14 +34,56 @@ async function getitems(req,res) {
     try{
       const {page = 1 ,limit =10,search} = req.query;
 console.log("Search query:", req.query);
-      const filter ={ createdby : req.userid};
+      
 
-    if (search && search.trim() !== '') {
-  filter.$or = [
+       if (req.role === 'admin'){
+        filter ={}; 
+
+        if (search && search.trim() !== "") {
+    filter.$or = [
     { name: { $regex: search, $options: "i" } },
-    { category: { $regex: search, $options: "i" } },
+    { category: { $regex: search, $options: "i" } }
+  ]
+}
+}
+
+      if (req.role === 'user'){
+
+        filter = {createdby : req.userid};
+
+        if (search && search.trim() !== "") {
+  filter.$and=[
+  {createdby: req.userid },
+  {  
+    $or : [
+    { name: { $regex: search, $options: "i" } },
+    { category: { $regex: search, $options: "i" } }
+  ]
+}
   ];
 }
+
+      }
+
+
+//     if (search && search.trim() !== '') {
+//   filter.$or = [
+//     { name: { $regex: search, $options: "i" } },
+//     { category: { $regex: search, $options: "i" } },
+//   ];
+// }
+
+// if (search && search.trim() !== "") {
+//   filter.$and=[
+//   {createdby: req.userid },
+//   {  
+//     $or : [
+//     { name: { $regex: search, $options: "i" } },
+//     { category: { $regex: search, $options: "i" } }
+//   ]
+// }
+//   ];
+// }
 
       //  if(category){
       //   filter.category = category;
@@ -81,7 +123,7 @@ async function getbyid(req,res) {
         }
       
 
-        const entry = await inventoryschema.findOne({ _id : searchid});
+        const entry = await inventoryschema.findOne({ _id : searchid });
 
     
     if(!entry) return res.status(404).json({error : "Not found "});
@@ -96,12 +138,12 @@ async function getbyid(req,res) {
 
 async function getall(req, res) {
      try {
-      const inventory = await inventoryschema.find({});
+      const inventory = await inventoryschema.find({ });
       return res.json(inventory);
      }
      catch(err){
         console.error("Get Items : ",err);
-         res.status(500).json({ Error : "Server Error" });
+         res.status(500).json({ error : "Server Error" });
 
      }
 };
@@ -117,7 +159,7 @@ async function updatebyid(req,res){
        }
     
         const data = await inventoryschema.findOneAndUpdate(
-          {_id : updateid},
+          {_id : updateid, createdby: req.userid},
           {
         $set : {
           name : String(body.name),
@@ -150,7 +192,7 @@ async function deletebyid(req,res){
           return res.status(400).json({error: "bad request"});
 
         }
-        const entry = await inventoryschema.findOneAndDelete({ _id : searchid});
+        const entry = await inventoryschema.findOneAndDelete({ _id : searchid, createdby: req.userid });
     
     if(!entry) return res.status(404).json({error : "Not found "});
     return res.status(201).json({

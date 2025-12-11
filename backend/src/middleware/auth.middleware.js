@@ -4,33 +4,57 @@ async function verifytoken(req,res,next){
 
      const authHeader = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!authHeader || !authHeader.startsWith('Bearer ') ) {
     return res.status(401).json({
       success: false,
       message: "Authentication token missing"
     });
   }
-    const token =  req.headers.authorization?.split(' ')[1];
+    const token =  authHeader.split(" ")[1];
         if (!token) {
-            res.status(200).json(   
-                 {
-                        success: false,
-                        message: "Error!Token was not provided."
-                    }
-                );
-            }
+            return res.status(401).json({
+                success: false,
+                message: "Error!Token was not provided."
+            });
+        }
     try{
-        const decoded = jwt.verify(token,'Hello');
+        const decoded = jwt.verify(token,"Hello");
         req.userid = decoded.userid;
+        req.role = decoded.role;
         next();
     }catch(err){
         return res.status(401).json({message:"Invalid token"});
+    
     }
 };
 
+// async function restrictto(req, res, next) {
+//     if(!req.userid){
+//         return res.status(401).json({message:"Invalid token"});
+//     }
+    
+//     role = req.headers.role;
+//     if(!)
+//     next();
+// }
 
-module.exports ={
+function restrictto(role = []){
+    return async function (req, res, next){
+        if(!req.userid){
+            return res.status(401).json({message:"Invalid token"});
+        }
+       
+        if( !role.includes(req.role)){
+            return res.status(401).json({message:"Unauthorized"});
+        }
+        next();
+    }
+}
+
+
+module.exports = {
     verifytoken,
+    restrictto,
 }
 
 

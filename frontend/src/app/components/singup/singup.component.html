@@ -59,7 +59,10 @@
     }
 
      <label for="password">Password</label>
-    <input type="text" placeholder="Write the Password" id="password" formControlName="password" required><br>
+  <!---  <input type="text" placeholder="Write the Password" id="password" formControlName="password" required><br>  -->
+
+   <input [type]="show ?  'text' : 'password'" placeholder="Write the Password"  class="password" id="password" formControlName = "password">
+    <button (click)="toggleShow()">{{ show ? 'Hide' : 'Show' }}</button>
 
     @if ( submitted || userForm.get('password')?.invalid && userForm.get('password')?.dirty || userForm.get('password')?.touched) {
 
@@ -75,6 +78,24 @@
        }
       </div>
     }
+
+
+   <label for="role">Role</label>
+<select id="role" class="role" formControlName="role">
+  <option value="" >Select Role</option>   <!--disabled selected-->
+  <option class="optionn" value="admin">admin</option>
+  <option class="optionn" value="user">user</option>
+</select>
+
+@if (submitted || (userForm.get('role')?.invalid && (userForm.get('role')?.dirty || userForm.get('role')?.touched))) {
+  <div >
+    @if (userForm.get('role')?.hasError('required')) {
+      <div class="error-box">Role is required.</div>
+    }
+  </div>
+}
+
+
     <input (click)="onsubmit()" type="submit" value="Sign Up"  >
      <button [routerLink]="['login']" type="submit"> Login here </button>
   </form>

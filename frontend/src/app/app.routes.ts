@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 import { ItemsListComponent } from './components/items-list/items-list.component';
 import { ItemcreateComponent } from './components/itemcreate/itemcreate.component';
 export const routes: Routes = [
@@ -24,7 +25,7 @@ export const routes: Routes = [
   },
 
   {
-     path : 'inventory/all',
+     path : 'inventory/all',canActivate: [AuthGuard],
     loadComponent : () => {
       return import('./components/items-list/items-list.component').then(
         (m) => m.ItemsListComponent,
@@ -33,7 +34,7 @@ export const routes: Routes = [
   },
 
   {
-    path : 'create',
+    path : 'create',canActivate: [AuthGuard],
     loadComponent : () => {
       return import('./components/itemcreate/itemcreate.component').then(
         (m) => m.ItemcreateComponent,
@@ -42,7 +43,7 @@ export const routes: Routes = [
   },
 
   {
-    path:'edit/:id',
+    path:'edit/:id',canActivate: [AuthGuard],
     loadComponent : () =>{
       return import('./components/itemcreate/itemcreate.component').then(
         (m) => m.ItemcreateComponent,

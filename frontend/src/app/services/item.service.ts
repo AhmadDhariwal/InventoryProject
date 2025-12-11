@@ -1,7 +1,8 @@
+import { Router } from '@angular/router';
 import { inject, Injectable } from '@angular/core';
 import { Inventory } from '../../../model/inventory';
 import { HttpClient } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { signup } from '../../../model/signup';
 import { login } from '../../../model/login';
 import { HttpHeaders } from '@angular/common/http';
@@ -12,10 +13,15 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ItemService {
+
+
+
     http = inject(HttpClient);
     private apiurl = `http://localhost:3000/items`;
     private signupurl = `http://localhost:3000/user`;
 
+
+  constructor(private router: Router) { }
 
 
 private getAuthHeaders() {
@@ -25,17 +31,36 @@ private getAuthHeaders() {
   });
 }
 
-  usersignup(item : signup){
-     return this.http.post<signup>(this.signupurl,item).pipe(
-      catchError(err => {
-         console.error('User Signup error : ', err);
-         return throwError(()=> err);
-      })
-     );
+
+isAuthenticated() : boolean{
+
+  const  t = localStorage.getItem('token') !== null;
+  return t;
   }
+
+logout(): void {
+        localStorage.removeItem('token');
+       this.router.navigate(['/login']);
+
+      }
+
+usersignup(item: signup) {
+  return this.http.post<signup>(this.signupurl, item).pipe(
+    tap((res:any) => {
+      localStorage.setItem('token', res.token);
+    }),
+    catchError(err => {
+      console.error('User Signup Error:', err);
+      return throwError(() => err);
+    })
+  );
+}
+
   userlogin(item : login){
     const url = `${this.signupurl}/login`;
-    return this.http.post<login>(url, item).pipe(
+    return this.http.post<login>(url, item,{
+        headers: this.getAuthHeaders()
+    }).pipe(
      catchError(err => {
         console.error('User Login error : ', err);
         return throwError(()=> err);

@@ -19,13 +19,13 @@ async function handleusersignup(req,res){
             email : body.email,
             username : body.username,
             password: body.password,
+           role : body.role,
         })
       await createduser.save();
 
-        const token = jwt.sign({ userid : createduser._id }, 'Hello', {expiresIn : '1h'});
-
+        const token = jwt.sign({ userid : createduser._id , role : createduser.role }, "Hello", {expiresIn : '1h'});
+       
         res.status(201).json({
-
              message: "User created successfully",
              token: token,
             item: createduser,
@@ -50,12 +50,14 @@ async function handleuserlogin(req,res){
         const logineduser = await userschema.findOne({
             username : body.username,
             password: body.password,
+           
         })
        // const passwordMatch = await bcrypt.compare(password, logineduser.password);
         if(!logineduser){
             return res.status(400).json({ error: "Invalid username or password" });
         }
-        const token = jwt.sign({ userid : logineduser._id }, 'Hello', {expiresIn : '1h'});
+        const token = jwt.sign({ userid : logineduser._id , role : logineduser.role }, "Hello", {expiresIn : '1h'});
+      
         res.status(201).json({
              message: "User found successfully",
              token: token,

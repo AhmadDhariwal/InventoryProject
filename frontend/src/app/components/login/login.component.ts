@@ -22,7 +22,8 @@ export class LoginComponent {
 
           constructor(
             private router: Router,
-            private route : ActivatedRoute
+            private route : ActivatedRoute,
+
           ) {}
 
             userForm = new FormGroup({
@@ -50,6 +51,13 @@ export class LoginComponent {
      ngOnInit(): void {
        console.log("hello world");
      }
+
+      password : string = '';
+      show : boolean = false;
+      toggleShow(){
+        this.show = !this.show;
+      }
+
 
      onsubmit(){
 
@@ -82,7 +90,6 @@ export class LoginComponent {
            )
          }
 
-      }
-
+        }
 
 

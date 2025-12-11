@@ -3,4 +3,5 @@ export type signup = {
   email : string ;
   username: string ;
   password : string;
+  type : string;
 }

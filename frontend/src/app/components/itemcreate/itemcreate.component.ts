@@ -57,8 +57,7 @@ export class ItemcreateComponent implements OnInit {
 
     ]),
 
-   })
-
+})
 
   ngOnInit() : void{
 

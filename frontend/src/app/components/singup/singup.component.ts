@@ -48,8 +48,6 @@ export class SingupComponent implements OnInit{
            Validators.min(8),
            Validators.max(100),
 
-
-
        ]),
        password : new FormControl('',[
           Validators.required,
@@ -58,12 +56,24 @@ export class SingupComponent implements OnInit{
            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/)
        ]),
 
+       role :  new FormControl('',[
+       Validators.required,
+    ]),
+
+
       })
 
       submitted = false;
   ngOnInit(): void {
     console.log("hello world");
   }
+
+
+  password : string = '';
+      show : boolean = false;
+      toggleShow(){
+        this.show = !this.show;
+      }
 
   onsubmit(){
 

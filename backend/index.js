@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 const inventoryschema = require("./src/models/model");
 const { connecttomongodb} = require('./connect');
 const route = require("./src/routes/route");
 const cors = require('cors');
 const userroute = require('./src/routes/user');
-const { verifytoken } = require('./src/middleware/auth.middleware');
+const { verifytoken,restrictto } = require('./src/middleware/auth.middleware');
 
 
 
@@ -16,7 +17,8 @@ const port = 3000;
 const allowedOrigins = ['http://localhost:4200'];
 
 app.use(cors({
-  origin: allowedOrigins
+  origin: allowedOrigins,
+  credentials: true
 }));
 
 connecttomongodb('mongodb://localhost:27017/inventorymanagement')
@@ -28,9 +30,10 @@ connecttomongodb('mongodb://localhost:27017/inventorymanagement')
 
   app.use (express.json());
 app.use(express.urlencoded({extended :false}));
+app.use(cookieParser());
 
 
-app.use('/items',verifytoken, route);
+app.use('/items',verifytoken,restrictto(["admin","user"]), route);
 app.use('/user',userroute);
 
 // app.get('/', (req, res) => {
