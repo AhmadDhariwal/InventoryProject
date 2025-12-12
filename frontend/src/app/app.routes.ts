@@ -16,7 +16,7 @@ export const routes: Routes = [
   },
 
   {
-     path: 'login',
+     path: 'login', 
      loadComponent :() => {
       return import('./components/login/login.component').then(
         (m) => m.LoginComponent,

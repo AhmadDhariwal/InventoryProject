@@ -28,6 +28,7 @@ async function handleusersignup(req,res){
         res.status(201).json({
              message: "User created successfully",
              token: token,
+              role : createduser.role,
             item: createduser,
         });
     
@@ -61,6 +62,7 @@ async function handleuserlogin(req,res){
         res.status(201).json({
              message: "User found successfully",
              token: token,
+             role : logineduser.role,
             item: logineduser ,
         });
     

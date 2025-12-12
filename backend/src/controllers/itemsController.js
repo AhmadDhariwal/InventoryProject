@@ -94,7 +94,9 @@ console.log("Search query:", req.query);
        const items =  await inventoryschema 
        .find(filter)
        .skip(skip)
-       .limit(Number(limit));
+       .limit(Number(limit))
+       .sort({ updatedAt: -1 })
+       .sort({ createdAt: -1 });
     
     console.log("Items fetched :", items);
     const total = await inventoryschema.countDocuments(filter);
@@ -217,6 +219,41 @@ async function getallusers(req, res) {
          res.status(500).json({ error : "Server Error" });
 
      }
+     //      try {
+//         const {search} = req.query;
+//     //  const users = await signup.find({ });
+//      // return res.json(users);
+//      const filter ={};
+
+//     if (search && search.trim() !== '') {
+//   filter.$or = [
+//     { name: { $regex: search, $options: "i" } },
+//     { email: { $regex: search, $options: "i" } },
+//   ];
+// }
+//       //  if(category){
+//       //   filter.category = category;
+//       //  }
+//        //const skip = (page - 1) * limit;
+       
+//        const users =  await signup
+//        .find(filter)
+//        .sort({ createdAt: -1 });
+    
+//     console.log("Items fetched :", users);
+//     const total = await signup.countDocuments(filter);
+
+//     return res.json({
+//       total,
+//       users
+//     })
+
+//      }
+//      catch(err){
+//         console.error("Get Items : ",err);
+//          res.status(500).json({ error : "Server Error" });
+
+//      }
 };
 
 

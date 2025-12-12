@@ -4,6 +4,7 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl } from '@angular/forms';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-users',
@@ -14,13 +15,35 @@ import { FormControl } from '@angular/forms';
 })
 export class UsersComponent implements OnInit{
 private ItemService =inject(ItemService);
+  searchControl = new FormControl('');
+
 
 constructor(
   private router: Router,
   private route  : ActivatedRoute,
 ){}
 
-ngOnInit () : void {
+users: any[] = [];
+totalitems =0 ;
 
+ngOnInit () : void {
+  this.loadusers();
+}
+
+
+ loadusers(){
+  this.ItemService.getusers().subscribe
+   ({
+    next: (data : any) =>{
+     console.log("Items are :", data );
+      this.users= data;
+
+    // console.log("Items are :",this.users );
+    },
+    error:(error) => {
+      console.error("Error in fetching items :", error);
+    }
+
+   });
 }
 }

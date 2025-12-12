@@ -30,6 +30,10 @@ private getAuthHeaders() {
     'Authorization': `Bearer ${token}`
   });
 }
+isadmin(): boolean {
+  const role = localStorage.getItem('role');
+  return role === 'admin';
+}
 
 
 isAuthenticated() : boolean{
@@ -40,6 +44,7 @@ isAuthenticated() : boolean{
 
 logout(): void {
         localStorage.removeItem('token');
+         localStorage.removeItem('role');
        this.router.navigate(['/login']);
 
       }
@@ -47,7 +52,9 @@ logout(): void {
 usersignup(item: signup) {
   return this.http.post<signup>(this.signupurl, item).pipe(
     tap((res:any) => {
+
       localStorage.setItem('token', res.token);
+       localStorage.setItem('role', res.item.role);
     }),
     catchError(err => {
       console.error('User Signup Error:', err);
@@ -61,6 +68,10 @@ usersignup(item: signup) {
     return this.http.post<login>(url, item,{
         headers: this.getAuthHeaders()
     }).pipe(
+      tap((res: any) => {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('role', res.item.role);
+      }),
      catchError(err => {
         console.error('User Login error : ', err);
         return throwError(()=> err);

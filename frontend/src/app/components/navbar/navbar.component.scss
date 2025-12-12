@@ -16,6 +16,13 @@
   margin: 0;
 }
 
+/* Navigation Buttons Container */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
 .Logout {
   padding: 10px 20px;
   background-color: rgb(89, 222, 240);
@@ -26,8 +33,6 @@
   cursor: pointer;
   transition: background-color 0.2s ease;
   white-space: nowrap;
-  margin-left: auto;
-  margin-right: 50px;
 }
 
 .Logout:hover {
@@ -65,4 +70,58 @@
     padding: 6px 12px;
     font-size: 13px;
   }
+}
+
+/* Router Link Styles */
+a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  margin: 0 10px;
+}
+
+a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+a.active {
+  background-color: rgb(89, 222, 240);
+  color: black;
+}
+
+/* User Button Class */
+.userbutton {
+  padding: 10px 20px;
+  background-color: rgb(89, 222, 240);
+  border: none;
+  border-radius: 40px;
+  color: black;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 40px;
+}
+
+.userbutton:hover {
+  background-color: rgb(70, 200, 220);
+  transform: translateY(-1px);
+  color: black;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+  color: white;
 }

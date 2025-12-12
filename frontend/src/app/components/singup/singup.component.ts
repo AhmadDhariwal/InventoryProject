@@ -76,7 +76,7 @@ export class SingupComponent implements OnInit{
       }
 
   onsubmit(){
-
+   
      this.submitted = true;
 
   if (this.userForm.invalid) {

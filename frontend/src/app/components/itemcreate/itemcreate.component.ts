@@ -149,6 +149,7 @@ export class ItemcreateComponent implements OnInit {
 
         if (this.userid) {
           this.itemService.updateitem(this.items,this.userid).subscribe(() => {
+
             this.router.navigate(['/inventory/all']);
           });
         } else {

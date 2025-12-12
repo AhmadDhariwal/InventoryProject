@@ -78,6 +78,7 @@ showDeleteConfirmation: boolean = false;
      // console.log("Items are :", data );
       this.items= data.items;
       this.totalitems = data.total;
+
     },
     error:(error) => {
       console.error("Error in fetching items :", error);
@@ -86,7 +87,18 @@ showDeleteConfirmation: boolean = false;
    });
 
 }
+//  updateAndMoveToFirst(updatedItem: any): void {
+//     const index = this.items.findIndex(item => item.id === updatedItem.id);
 
+//     if (index !== -1) {
+//       this.items.splice(index, 1);
+
+//       this.items.unshift(updatedItem);
+
+//
+//       // this.items = [...this.items];
+//     }
+//   }
 
 
 confirmDelete(item:any){
