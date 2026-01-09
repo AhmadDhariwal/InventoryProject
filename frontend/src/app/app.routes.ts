@@ -16,14 +16,21 @@ export const routes: Routes = [
   },
 
   {
-     path: 'login', 
+     path: 'login',
      loadComponent :() => {
       return import('./components/login/login.component').then(
         (m) => m.LoginComponent,
       )
      }
   },
-
+{
+  path:'homepage', canActivate :[AuthGuard],
+  loadComponent:() => {
+    return import('./components/homepage/homepage.component').then(
+      (m) => m.HomepageComponent,
+    )
+  }
+},
   {
      path : 'inventory/all',canActivate: [AuthGuard],
     loadComponent : () => {

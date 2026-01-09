@@ -78,7 +78,7 @@ export class LoginComponent {
              if (response.token) {
                localStorage.setItem('token', response.token);
              }
-             this.router.navigate(['inventory/all']);
+             this.router.navigate(['homepage']);
 
            },
            error:(error) => {
